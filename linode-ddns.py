@@ -58,13 +58,19 @@ def find_best_domain(client, fqdn):
         raise ValueError("no domain found in Linode account for this host name")
     return best
 
+# Python 3.9 introduced string removesuffix method, this is for older versions of Python
+def removesuffix(s, suffix):
+    if s.endswith(suffix):
+        return s[:-len(suffix)]
+    return s
+    
 def create_or_update_record(record_type, allow_family):
     # first select address family (IPv4 or IPv6) BEFORE we open a socket
     urllib3_cn.allowed_gai_family = allow_family
     client = create_client()
     domain = find_best_domain(client, args.domain_to_set)
     domain_name = domain.domain
-    base_name = args.domain_to_set.removesuffix('.' + domain_name)
+    base_name = removesuffix(args.domain_to_set, '.' + domain_name)
     # print(f"domain name {domain_name} found")
     record = get_domain_record(domain, base_name, record_type)
     if None == record:
