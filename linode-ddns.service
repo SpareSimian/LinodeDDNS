@@ -1,0 +1,12 @@
+[Unit]
+Description=Update our host record at Linode
+After=network.target
+
+[Service]
+Type=oneshot
+# the parameter is the desired hostname to update
+ExecStart=/usr/local/bin/LinodeDDNS/linode-ddns.py myhouse.example.com
+StandardOutput=syslog
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=Update our host record at Linode
+After=network.target
+
+[Timer]
+# run at startup and once an hour after that
+OnBootSec=1min
+OnUnitActiveSec=1h
+
+[Install]
+WantedBy=timers.target
