@@ -80,6 +80,7 @@ def create_or_update_record(record_type, allow_family):
     else:
         print(f"Updating {base_name} {record_type} record in domain {domain_name}")
         record.target = "[remote_addr]"
+        record.ttl_sec = ddns_ttl_sec
         # update with new value
         result = record.save()
 
